@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +23,10 @@ import database.DBProdotto;
 import database.DBScontrino;
 
 public class gui_cassa extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final Integer idCassa;
 	private Dipendente dip;
 	private DBProdotto dbprodotto = new DBProdotto();
@@ -33,7 +38,9 @@ public class gui_cassa extends JFrame{
 	private String codiceFiscale = null;
 	
 	public gui_cassa(final Dipendente dip, final Integer idCassa) {
-		this.setPreferredSize(new Dimension(800,600));
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		this.setTitle("CASSA N. " + idCassa + "\tDIPENDENTE: " + dip.getNome() + " " + dip.getCognome());
 		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
 		this.idCassa = idCassa;
 		this.dip = dip;
@@ -42,10 +49,9 @@ public class gui_cassa extends JFrame{
 		dbcassa.occupaCassa(idCassa);
 		JPanel panel = new JPanel();
 		this.setContentPane(panel);
-		DefaultTableModel model = new DefaultTableModel();
-		model.addColumn("Nome Prodotto");
-		model.addColumn("Prezzo");
-		JTable table = new JTable(model);
+		DefaultTableModel model = new DefaultTableModel(new Object[] {"Nome Prodotto", "Prezzo"},0);
+		JTable table = new JTable();
+		table.setModel(model);
 		JTextField fieldProducts = new JTextField("");
 		fieldProducts.setPreferredSize(new Dimension(50, 30));
 		JButton btnEnter = new JButton("Aggiungi");
@@ -97,12 +103,17 @@ public class gui_cassa extends JFrame{
 		});
 		JButton btnFineTurno = new JButton("Fine Turno");
 		btnFineTurno.addActionListener(e ->{
-			dblavora.fineLavoro();
-			dbcassa.liberaCassa(idCassa);
-			this.dispose();
+			if(model.getDataVector().isEmpty()) {
+				dblavora.fineLavoro();
+				dbcassa.liberaCassa(idCassa);
+				this.dispose();	
+			}
+			else
+				JOptionPane.showMessageDialog(null, "Devi stampare lo scontrino attuale prima di poter terminare il turno");
+			
 		});
 		
-		panel.add(table);
+		panel.add(new JScrollPane(table));
 		panel.add(fieldProducts);
 		panel.add(btnEnter);
 		panel.add(label_totale);

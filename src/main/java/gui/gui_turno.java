@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +27,7 @@ public class gui_turno extends JFrame{
 	
 	public gui_turno() {
 		this.setPreferredSize(new Dimension(800,600));
+		this.setTitle("GESTIONE TURNI");
 		JPanel panel = new JPanel();
 		this.setContentPane(panel);
 		text = new JTextField();
@@ -55,24 +57,22 @@ public class gui_turno extends JFrame{
 			refreshTable();
 		});
 		
-		model = new DefaultTableModel();
-		model.addColumn("ID Dipendente");
-		model.addColumn("data");
-		model.addColumn("Ora Inizio");
-		model.addColumn("Ora Fine");
+
+		model = new DefaultTableModel(new String[] {"ID Dipendente", "data", "Ora Inizio", "Ora Fine"},0);
+		
 		refreshTable();
 		btnSearch.addActionListener(e ->{
 			refreshTable();
 		});
-		table = new JTable(model);
+		table = new JTable();
+		table.setModel(model);
 		table.getTableHeader();
 		
-		// mettere nomi colonne jtable
 		// scontrino se nessun prodotto errore
 		// titoli
 		// cassa occupata
 		
-		panel.add(table);
+		panel.add(new JScrollPane(table));
 		panel.add(label_text);
 		panel.add(text);
 		panel.add(btnSearch);

@@ -8,13 +8,17 @@ public class DBCassa extends DBManager{
 
     private  ResultSet rs;
     private String sql;
+    private boolean valore;
     
 	public boolean getisOccupata(Integer idCassa) {
 		open();
 		try {
-			sql = "select isOccupata from CASSA where idCassa= "+ idCassa;
+			System.out.println(idCassa);
+			sql = "select * from CASSA where idCassa= "+ idCassa;
 			rs = getConn().createStatement().executeQuery(sql);
-			return rs.getBoolean("isOccupata");
+			if(rs.next())
+			valore = rs.getBoolean("isOccupata");
+			System.out.println(valore);
 		}
 		catch(SQLException e ) {
 			System.out.println(e);
@@ -22,7 +26,7 @@ public class DBCassa extends DBManager{
 		finally {
 			close();
 		}
-		return false;
+		return valore;
 	}
 	
 	public void liberaCassa(Integer idCassa) {

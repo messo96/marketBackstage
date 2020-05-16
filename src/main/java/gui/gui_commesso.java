@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,6 +16,16 @@ import database.DBCassa;
 
 
 public class gui_commesso extends JFrame {
+	/**
+	 * 
+	 */
+	
+	//TODO
+	//aggiungi prodotto gui  e cliente gui
+	// controllare se manca qualcosa
+	// popolare un altro pò il db
+	// credo FINITOOOO
+	private static final long serialVersionUID = 1L;
 	private final int N_CASSE=6;
 	private Dipendente dip = new Dipendente();
 	private DBCassa cassa = new DBCassa();
@@ -24,14 +35,18 @@ public class gui_commesso extends JFrame {
 	
 	public gui_commesso(final Dipendente dip) {
 		this.setTitle("PANNELLO DI CONTROLLO COMMESSO");
-		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
+		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, 
+												(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
 		this.dip = dip;
 		panel = new JPanel();
 		this.setContentPane(panel);
+		
 		for(int i=0;i<N_CASSE;i++) {
 			JButton bt = new JButton(String.valueOf(i+1));
+			
 			bt.addActionListener(e ->{
 				JButton b = (JButton)e.getSource();
+				System.out.println(b.getText());
 				if(cassa.getisOccupata(Integer.valueOf(b.getText())))
 					JOptionPane.showMessageDialog(null, "Questa cassa è al momento occupata");
 				else {
@@ -39,7 +54,7 @@ public class gui_commesso extends JFrame {
 					new gui_cassa(dip, Integer.valueOf(b.getText()));
 				}
 			});
-			
+			panel.add(new JLabel("CASSA: "));
 			panel.add(bt,BorderLayout.EAST);
 			allCasse.put(i, bt);
 			

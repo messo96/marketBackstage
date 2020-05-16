@@ -2,6 +2,9 @@ package database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JOptionPane;
@@ -10,6 +13,9 @@ import baseClass.Prodotto;
 
 public class DBProdotto extends DBManager{
     private  ResultSet rs;
+	private java.util.Date d = new java.util.Date();
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	
 	public DBProdotto() {
 		
@@ -17,13 +23,13 @@ public class DBProdotto extends DBManager{
 	
 	
 	public Prodotto getProductFromId(final Integer idProdotto) {
-		
+			
 		try
 		{
 			String query = "select * from PRODOTTO where idProdotto= " + idProdotto;
 			rs = open().executeQuery(query);
 			if(rs.next()) {
-				return new Prodotto(rs.getInt("idProdotto"),rs.getString("nome"), rs.getDouble("prezzo"));
+				return new Prodotto(rs.getInt("idProdotto"),rs.getString("nome"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità"));
 				}
 			else
 				JOptionPane.showMessageDialog(null, "Il prodotto non esiste");
@@ -42,7 +48,8 @@ public class DBProdotto extends DBManager{
 		
 		try
 		{
-			String query = "select * from PRODOTTO P, OFFERTA O where P.idProdotto = " + idProdotto + " AND P.id_offerta = O.id_offerta";
+			String query = "select * from PRODOTTO P, OFFERTA O where P.idProdotto = " + idProdotto 
+																		+ " AND P.id_offerta = O.id_offerta AND dataFine <= " + sdf.format(d);
 			rs = open().executeQuery(query);
 			if(rs.next()) {
 				return Optional.of(rs.getInt("sconto"));
@@ -77,5 +84,27 @@ public class DBProdotto extends DBManager{
 		finally {
 			close();	
 		}
+	}
+	
+	public List<Prodotto> getAllProducts() {
+		List<Prodotto> list = new ArrayList<>();
+		
+		try
+		{
+			String query = "select * from PRODOTTO";
+			rs = open().executeQuery(query);
+			while(rs.next()) {
+				list.add(new Prodotto(rs.getInt("idProdotto"), rs.getString("nome"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità")));
+				}
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("download products error! "+e);
+		}
+		finally {
+			close();	
+		}
+		return list;
 	}
 }
