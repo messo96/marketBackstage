@@ -53,12 +53,18 @@ public class gui_cassa extends JFrame{
 		JTable table = new JTable();
 		table.setModel(model);
 		JTextField fieldProducts = new JTextField("");
+		fieldProducts.setBounds(614, 204, 50, 30);
 		fieldProducts.setPreferredSize(new Dimension(50, 30));
 		JButton btnEnter = new JButton("Aggiungi");
+		btnEnter.setBounds(669, 200, 130, 38);
 		JButton btnCliente = new JButton("Inserisci codice cliente");
 		JTextField textCliente = new JTextField(" ");
+		textCliente.setBounds(845, 309, 250, 30);
 		textCliente.setPreferredSize(new Dimension(50, 30));
 		JLabel label_cliente = new JLabel("Codice cliente: ");
+		label_cliente.setBounds(621, 315, 178, 18);
+		JLabel label_text_totale = new JLabel("Totale:");
+		label_text_totale.setBounds(367, 445, 120, 18);
 		
 		btnCliente.addActionListener(e ->{
 			if (dbcliente.isClienteEsiste(textCliente.getText())) {
@@ -70,6 +76,7 @@ public class gui_cassa extends JFrame{
 			
 		});
 		JLabel label_totale = new JLabel(totale.toString() + " €");
+		label_totale.setBounds(578, 434, 86, 30);
 		
 		btnEnter.addActionListener(e ->{
 			Integer idProdotto = Integer.valueOf(fieldProducts.getText());
@@ -83,11 +90,12 @@ public class gui_cassa extends JFrame{
 			}
 				
 			label_totale.setText(totale.toString() + " €");
-			
+			fieldProducts.setText("");
 			dbprodotto.aggiornaMagazzino(idProdotto);
 		});
 		
 		JButton btnStampaScontrino = new JButton("StampaScontrino");
+		btnStampaScontrino.setBounds(578, 504, 261, 59);
 		btnStampaScontrino.addActionListener(e ->{
 			if(codiceFiscale!=null)
 			dbscontrino.stampaScontrino(idCassa, totale);
@@ -99,9 +107,11 @@ public class gui_cassa extends JFrame{
 			codiceFiscale=null;
 			model.getDataVector().removeAllElements();
 			revalidate();
+			repaint();
 			
 		});
 		JButton btnFineTurno = new JButton("Fine Turno");
+		btnFineTurno.setBounds(1213, 5, 120, 59);
 		btnFineTurno.addActionListener(e ->{
 			if(model.getDataVector().isEmpty()) {
 				dblavora.fineLavoro();
@@ -112,8 +122,11 @@ public class gui_cassa extends JFrame{
 				JOptionPane.showMessageDialog(null, "Devi stampare lo scontrino attuale prima di poter terminare il turno");
 			
 		});
+		panel.setLayout(null);
 		
-		panel.add(new JScrollPane(table));
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(157, 5, 452, 428);
+		panel.add(scrollPane);
 		panel.add(fieldProducts);
 		panel.add(btnEnter);
 		panel.add(label_totale);
@@ -121,7 +134,7 @@ public class gui_cassa extends JFrame{
 		panel.add(textCliente);
 		panel.add(btnStampaScontrino);
 		panel.add(btnFineTurno);
-		
+		panel.add(label_text_totale);
 		this.pack();
 		this.setVisible(true);
 		

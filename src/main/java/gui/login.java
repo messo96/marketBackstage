@@ -34,7 +34,7 @@ public class login extends JFrame{
 		button.addActionListener(e ->{
 			Dipendente dip = dataDip.getDipendenteFromId(Integer.valueOf(codice.getText()));
 				if( dip != null) {
-					if(dip.getTipo() == "Commesso") {
+					if(dip.getTipo().equals("Commesso") ) {
 						JOptionPane.showMessageDialog(null, "Benvenuto " + dip.getNome() + "\nTipo : " + dip.getTipo());
 						new gui_commesso(dip);
 					}

@@ -21,10 +21,12 @@ public class gui_commesso extends JFrame {
 	 */
 	
 	//TODO
-	//aggiungi prodotto gui  e cliente gui
+	// aggiungi prodotto gui e cliente gui
 	// controllare se manca qualcosa
 	// popolare un altro pò il db
-	// credo FINITOOOO
+	// aggiorna orario scontrino
+	//
+	
 	private static final long serialVersionUID = 1L;
 	private final int N_CASSE=6;
 	private Dipendente dip = new Dipendente();

@@ -2,6 +2,7 @@ package database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class DBProdotto extends DBManager{
 			String query = "select * from PRODOTTO where idProdotto= " + idProdotto;
 			rs = open().executeQuery(query);
 			if(rs.next()) {
-				return new Prodotto(rs.getInt("idProdotto"),rs.getString("nome"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità"));
+				return new Prodotto(rs.getInt("idProdotto"), rs.getString("nome"), rs.getString("descrizione"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità"), rs.getString("PIVA"));
 				}
 			else
 				JOptionPane.showMessageDialog(null, "Il prodotto non esiste");
@@ -48,8 +49,8 @@ public class DBProdotto extends DBManager{
 		
 		try
 		{
-			String query = "select * from PRODOTTO P, OFFERTA O where P.idProdotto = " + idProdotto 
-																		+ " AND P.id_offerta = O.id_offerta AND dataFine <= " + sdf.format(d);
+			String query = "select * from PRODOTTO P, OFFERTA O where P.id_offerta = O.id_offerta AND P.idProdotto=  " 
+																+ idProdotto + " AND \" "+ sdf.format(d) + "\" BETWEEN O.dataInizio AND O.dataFine";
 			rs = open().executeQuery(query);
 			if(rs.next()) {
 				return Optional.of(rs.getInt("sconto"));
@@ -79,7 +80,7 @@ public class DBProdotto extends DBManager{
 		}
 		catch(Exception e)
 		{
-			System.out.println("Product offer error! "+e);
+			System.out.println("Product refresh error! "+e);
 		}
 		finally {
 			close();	
@@ -94,7 +95,7 @@ public class DBProdotto extends DBManager{
 			String query = "select * from PRODOTTO";
 			rs = open().executeQuery(query);
 			while(rs.next()) {
-				list.add(new Prodotto(rs.getInt("idProdotto"), rs.getString("nome"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità")));
+				list.add(new Prodotto(rs.getInt("idProdotto"), rs.getString("nome"), rs.getString("descrizione"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità"), rs.getString("PIVA")));
 				}
 			
 		}
@@ -107,4 +108,47 @@ public class DBProdotto extends DBManager{
 		}
 		return list;
 	}
+	
+	public void addProdotto(String nome, String descrizione, String reparto, Double prezzo, Integer quantity, String PIVA) {
+		try {
+			 open();
+		        PreparedStatement prepared = getConn()
+		        		.prepareStatement("INSERT INTO PRODOTTO (nome, descrizione, reparto, prezzo, quantità, PIVA) values (?,?,?,?,?,?)");
+		        prepared.setString(1, nome);
+		        prepared.setString(2, descrizione);
+		        prepared.setString(3, reparto);
+		        prepared.setDouble(4, prezzo);
+		        prepared.setInt(5, quantity);
+		        prepared.setString(6, PIVA);
+
+		     	prepared.executeUpdate();
+		}
+		catch(Exception e) {
+			System.out.println("\nError while insert new prodotto or PIVA fornitore is not valid" + e);
+		}
+		finally {
+			close();
+		}
+	}
+	
+		public void aggiungiQuantità(final Integer idProdotto, final Integer quantity) {
+			try
+			{
+				 open();
+		        PreparedStatement prepared = getConn()
+		        		.prepareStatement("update PRODOTTO set quantità = quantità + ? where idProdotto = ?");
+		       
+		        prepared.setInt(1, quantity);
+		        prepared.setInt(2, idProdotto);
+		     	
+		     	prepared.executeUpdate();		
+			}
+			catch(Exception e)
+			{
+				System.out.println("Product add quantity error! "+e);
+			}
+			finally {
+				close();	
+			}
+		}
 }

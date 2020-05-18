@@ -18,7 +18,7 @@ public class Dipendente {
 	
 	public Dipendente(Integer id, String nome, String cognome, String tipo, String codiceFiscale, String telefono) {
 		this.id = id;
-		this.cognome = nome;
+		this.nome = nome;
 		this.cognome = cognome;
 		this.tipo = tipo;
 		this.codiceFiscale = codiceFiscale;

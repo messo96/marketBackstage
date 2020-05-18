@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import baseClass.Dipendente;
 import baseClass.Turno;
 
 public class DBTurno extends DBManager{
@@ -61,22 +62,67 @@ public class DBTurno extends DBManager{
 		return list;
 	}
 	
-	public void InserisciTurno(final Date data, final String oraInizio, final String oraFine,final Integer idDip) {
+	public void InserisciTurno(final String data, final String oraInizio, final String oraFine,final Integer idDip) {
 		try {
 			 open();
 		        PreparedStatement prepared = getConn()
 		        		.prepareStatement("INSERT INTO TURNO (data, oraInizio, oraFine, idDipendente) values (?,?,?,?)");
-		        prepared.setDate(1, java.sql.Date.valueOf(sdf.format(data)));
+		        prepared.setDate(1, java.sql.Date.valueOf(data));
 		        prepared.setTime(2, new java.sql.Time(timeFormat.parse(oraInizio).getTime()));
 		        prepared.setTime(3, new java.sql.Time(timeFormat.parse(oraFine).getTime()));
 		        prepared.setInt(4, idDip);
 		     	prepared.executeUpdate();
 		}
 		catch(Exception e) {
-			System.out.println("\nError while print scontrino " + e);
+			System.out.println("\nError while insert Turno " + e);
 		}
 		finally {
 			close();
 		}
+	}
+	
+	public List<Dipendente> allDipendenti(){
+		List<Dipendente> list = new ArrayList<>();
+	
+		try
+		{
+			String query = "select * from DIPENDENTE";
+			rs = open().executeQuery(query);
+			while(rs.next()) {
+				list.add(new Dipendente(rs.getInt("idDipendente"), rs.getString("nome"),
+												rs.getString("cognome"), rs.getString("tipo"),rs.getString("codiceFiscale"), rs.getString("telefono")));
+			}
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println("download Turni failed! "+e);
+		}
+		finally {
+			close();	
+		}
+		return list;
+	}
+	
+	public List<Turno> ricercaTurno(final Date data, final Integer idDipendente ){
+		List<Turno> list = new ArrayList<>();
+		
+		try
+		{
+			String query = "select * from TURNO where data= " + sdf.format(data) + " AND idDipendente= "+ idDipendente;
+			rs = open().executeQuery(query);
+			while(rs.next()) {
+				list.add(new Turno(rs.getDate("data"), rs.getTime("oraInizio"), rs.getTime("oraFine"), rs.getInt("idDipendente")));
+			}
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println("download ricerca Turni failed! "+e);
+		}
+		finally {
+			close();	
+		}
+		return list;
 	}
 }
