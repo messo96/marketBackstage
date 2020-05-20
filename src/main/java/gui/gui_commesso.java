@@ -20,29 +20,20 @@ public class gui_commesso extends JFrame {
 	 * 
 	 */
 	
-	//TODO
-	// aggiungi prodotto gui e cliente gui
-	// controllare se manca qualcosa
-	// popolare un altro pò il db
-	// aggiorna orario scontrino
-	//
 	
 	private static final long serialVersionUID = 1L;
 	private final int N_CASSE=6;
-	private Dipendente dip = new Dipendente();
 	private DBCassa cassa = new DBCassa();
 	private Map<Integer, JButton> allCasse = new HashMap<>();
 	private JPanel panel;
 	
 	
 	public gui_commesso(final Dipendente dip) {
-		this.setTitle("PANNELLO DI CONTROLLO COMMESSO");
+		this.setTitle("PANNELLO DI CONTROLLO COMMESSO " + dip.getNome() + " "+ dip.getCognome() + " ID: "+ dip.getId());
 		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, 
 												(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
-		this.dip = dip;
 		panel = new JPanel();
 		this.setContentPane(panel);
-		
 		for(int i=0;i<N_CASSE;i++) {
 			JButton bt = new JButton(String.valueOf(i+1));
 			

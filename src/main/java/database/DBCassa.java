@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class DBCassa extends DBManager{
 
     private  ResultSet rs;
@@ -21,6 +23,7 @@ public class DBCassa extends DBManager{
 			System.out.println(valore);
 		}
 		catch(SQLException e ) {
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println(e);
 		}
 		finally {
@@ -41,6 +44,8 @@ public class DBCassa extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("Free cassa error! "+e);
 		}
 		finally {
@@ -60,6 +65,8 @@ public class DBCassa extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("Occupa cassa error! "+e);
 		}
 		finally {

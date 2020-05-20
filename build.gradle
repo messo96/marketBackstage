@@ -35,4 +35,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.toedter/jcalendar
 	compile group: 'com.toedter', name: 'jcalendar', version: '1.4'
 	
+	compile group: 'com.formdev', name: 'flatlaf', version: '0.35'
+	
 }

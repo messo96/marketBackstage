@@ -37,6 +37,8 @@ public class DBProdotto extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("Product doesn't exist!"+e);
 		}
 		finally {
@@ -60,6 +62,8 @@ public class DBProdotto extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("Product offer error! "+e);
 		}
 		finally {
@@ -80,6 +84,8 @@ public class DBProdotto extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("Product refresh error! "+e);
 		}
 		finally {
@@ -101,6 +107,8 @@ public class DBProdotto extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("download products error! "+e);
 		}
 		finally {
@@ -110,6 +118,10 @@ public class DBProdotto extends DBManager{
 	}
 	
 	public void addProdotto(String nome, String descrizione, String reparto, Double prezzo, Integer quantity, String PIVA) {
+		if(nome.isEmpty() || descrizione.isEmpty() || reparto.isEmpty() || prezzo.isNaN() || quantity <= 0 || PIVA.isEmpty())
+			JOptionPane.showMessageDialog(null, "Inserisci tutti i campi");
+		else {
+		
 		try {
 			 open();
 		        PreparedStatement prepared = getConn()
@@ -122,12 +134,17 @@ public class DBProdotto extends DBManager{
 		        prepared.setString(6, PIVA);
 
 		     	prepared.executeUpdate();
+		     	JOptionPane.showMessageDialog(null, "Il prodotto "+nome+" è stato inserito correttamente");
 		}
 		catch(Exception e) {
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("\nError while insert new prodotto or PIVA fornitore is not valid" + e);
 		}
 		finally {
 			close();
+		}
+		
 		}
 	}
 	
@@ -145,10 +162,36 @@ public class DBProdotto extends DBManager{
 			}
 			catch(Exception e)
 			{
+
+				JOptionPane.showMessageDialog(null, "Errore\n" + e);
 				System.out.println("Product add quantity error! "+e);
 			}
 			finally {
 				close();	
 			}
+		}
+		
+		
+		public List<String> getAllReparti(){
+			List<String> list = new ArrayList<>();
+			
+			try
+			{
+				String query = "select distinct reparto from PRODOTTO";
+				rs = open().executeQuery(query);
+				while(rs.next()) {
+					list.add(rs.getString("reparto"));
+				}
+			}
+			catch(Exception e)
+			{
+
+				JOptionPane.showMessageDialog(null, "Errore\n" + e);
+				System.out.println("download reparti error! "+e);
+			}
+			finally {
+				close();	
+			}
+			return list;
 		}
 }

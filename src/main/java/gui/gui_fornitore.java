@@ -5,14 +5,19 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import database.DBFornitore;
 
 public class gui_fornitore extends JFrame{
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final Integer NUM_PIVA = 11;
+	
 	public gui_fornitore() {
 		this.setTitle("NUOVO FORNITORE");
 		this.setPreferredSize(new Dimension(800,600));
@@ -22,26 +27,26 @@ public class gui_fornitore extends JFrame{
 		JLabel label_PIVA = new JLabel("P.Iva*: ");
 		label_PIVA.setBounds(29, 40, 49, 15);
 		JTextField text_PIVA = new JTextField();
-		text_PIVA.setBounds(115, 33, 200, 30);
+		text_PIVA.setBounds(113, 33, 202, 30);
 		text_PIVA.setPreferredSize(new Dimension(200,30));
 		
 		
 		JLabel label_nomeAzienda = new JLabel("Nome Azienda*:");
-		label_nomeAzienda.setBounds(333, 40, 108, 15);
+		label_nomeAzienda.setBounds(367, 101, 108, 15);
 		JTextField text_nome = new JTextField();
-		text_nome.setBounds(487, 33, 200, 30);
+		text_nome.setBounds(499, 94, 200, 30);
 		text_nome.setPreferredSize(new Dimension(200,30));
 		
 		JLabel label_indirizzo = new JLabel("Indirizzo*:");
 		label_indirizzo.setBounds(29, 181, 69, 15);
-		JTextArea text_indirizzo = new JTextArea();
-		text_indirizzo.setBounds(113, 166, 200, 30);
+		JTextField text_indirizzo = new JTextField();
+		text_indirizzo.setBounds(113, 174, 202, 30);
 		text_indirizzo.setPreferredSize(new Dimension(200,30));
 		
 		JLabel label_citta = new JLabel("Città*:");
-		label_citta.setBounds(433, 181, 44, 15);
-		JTextArea text_citta = new JTextArea();
-		text_citta.setBounds(487, 166, 200, 30);
+		label_citta.setBounds(405, 181, 44, 15);
+		JTextField text_citta = new JTextField();
+		text_citta.setBounds(499, 166, 200, 30);
 		text_citta.setPreferredSize(new Dimension(200,30));
 		
 		JLabel label_nazione = new JLabel("Nazione*:");
@@ -51,13 +56,13 @@ public class gui_fornitore extends JFrame{
 		JLabel label_telefono = new JLabel("Telefono*:");
 		label_telefono.setBounds(29, 344, 69, 15);
 		JTextField text_telefono = new JTextField();
-		text_telefono.setBounds(115, 338, 190, 25);
+		text_telefono.setBounds(113, 339, 202, 26);
 
-		JTextArea text_nazione = new JTextArea();
-		text_nazione.setBounds(115, 244, 202, 25);
+		JTextField text_nazione = new JTextField();
+		text_nazione.setBounds(113, 247, 202, 30);
 		
 		JLabel label_fax = new JLabel("Fax:");
-		label_fax.setBounds(448, 344, 29, 15);
+		label_fax.setBounds(405, 344, 29, 15);
 		JTextField text_fax = new JTextField();
 		text_fax.setBounds(499, 337, 200, 30);
 		text_fax.setPreferredSize(new Dimension(200,30));
@@ -71,23 +76,19 @@ public class gui_fornitore extends JFrame{
 		JLabel label_sito = new JLabel("Sito Web: ");
 		label_sito.setBounds(405, 254, 70, 15);
 		JTextField text_sito = new JTextField();
-		text_sito.setBounds(487, 254, 212, 30);
+		text_sito.setBounds(499, 254, 200, 30);
 		text_PIVA.setPreferredSize(new Dimension(200,30));
 		
 		JButton btn_inserisci = new JButton("INSERISCI");
-		btn_inserisci.setBounds(312, 445, 148, 30);
+		btn_inserisci.setBounds(293, 445, 148, 30);
 		btn_inserisci.addActionListener(e ->{
-			if(text_fax.getText().isEmpty() && text_sito.getText().isEmpty())
+			if(text_PIVA.getText().length() != NUM_PIVA || text_nome.getText().isEmpty() || text_indirizzo.getText().isEmpty() ||
+								text_citta.getText().isEmpty() || text_nazione.getText().isEmpty() || text_telefono.getText().isEmpty())
+					JOptionPane.showMessageDialog(null, "Compilare i campi obbligatori");
+			else 
 			new DBFornitore().addFornitore(text_PIVA.getText(), text_nome.getText(), text_indirizzo.getText(), text_citta.getText(),
-						text_nazione.getText(), text_telefono.getText(), text_email.getText(), text_sito.getText());
-			else if (text_fax.getText().isEmpty())
-				new DBFornitore().addFornitore(text_PIVA.getText(), text_nome.getText(), text_indirizzo.getText(), text_citta.getText(),
-						text_nazione.getText(), text_email.getText(), text_telefono.getText());
-			else
-				new DBFornitore().addFornitore(text_PIVA.getText(), text_nome.getText(), text_indirizzo.getText(), text_citta.getText(),
-						text_nazione.getText(), text_telefono.getText(), text_fax.getText(),text_sito.getText(), text_email.getText());
-			
-			this.dispose();
+						text_nazione.getText(), text_telefono.getText(), text_fax.getText(), text_sito.getText(), text_email.getText());
+						
 		});
 		panel.setLayout(null);
 		

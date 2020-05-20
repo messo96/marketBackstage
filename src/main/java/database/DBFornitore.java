@@ -6,6 +6,8 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import baseClass.Fornitore;
 import baseClass.Prodotto;
 
@@ -29,6 +31,8 @@ public class DBFornitore extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("download fornitore error! "+e);
 		}
 		finally {
@@ -54,62 +58,70 @@ public class DBFornitore extends DBManager{
 		        prepared.setString(9,email);
 		        
 		     	prepared.executeUpdate();
-		}
-		catch(Exception e) {
-			System.out.println("\nError while add Fornitore " + e);
-		}
-		finally {
-			close();
-		}
-	}
-	
-public void addFornitore(final String PIVA, final String nomeAzienda, final String indirizzo, final String citta, final String nazione, final String  telefono, final String email, final String sitoWeb) {
-		
-		try {
-			 open();
-		        PreparedStatement prepared = getConn()
-		        		.prepareStatement("INSERT INTO FORNITORE (PIVA, nomeAzienda, indirizzo, città, nazione, telefono, email, sitoWeb) values (?,?,?,?,?,?,?,?)");
-		        prepared.setString(1,PIVA);
-		        prepared.setString(2,nomeAzienda);
-		        prepared.setString(3,indirizzo);
-		        prepared.setString(4,citta);
-		        prepared.setString(5,nazione);
-		        prepared.setString(6,telefono);
-		        prepared.setString(7,email);
-		        prepared.setString(8,sitoWeb);
-		        
-		        
-		     	prepared.executeUpdate();
-		}
-		catch(Exception e) {
-			System.out.println("\nError while add Fornitore " + e);
-		}
-		finally {
-			close();
-		}
-	}
+				JOptionPane.showMessageDialog(null, "Fornitore "+nomeAzienda+" inserito correttamente");
 
-public void addFornitore(final String PIVA, final String nomeAzienda, final String indirizzo, final String citta, final String nazione, final String email, final String  telefono) {
-	
-	try {
-		 open();
-	        PreparedStatement prepared = getConn()
-	        		.prepareStatement("INSERT INTO FORNITORE (PIVA, nomeAzienda, indirizzo, città, nazione, , email, telefono) values (?,?,?,?,?,?,?)");
-	        prepared.setString(1,PIVA);
-	        prepared.setString(2,nomeAzienda);
-	        prepared.setString(3,indirizzo);
-	        prepared.setString(4,citta);
-	        prepared.setString(5,nazione);
-	        prepared.setString(6,email);
-	        prepared.setString(7,telefono);
-	        
-	     	prepared.executeUpdate();
+		}
+		catch(Exception e) {
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
+			System.out.println("\nError while add Fornitore " + e);
+		}
+		finally {
+			close();
+		}
 	}
-	catch(Exception e) {
-		System.out.println("\nError while add Fornitore " + e);
-	}
-	finally {
-		close();
-	}
-}
+//	
+//public void addFornitore(final String PIVA, final String nomeAzienda, final String indirizzo, final String citta, final String nazione, final String  telefono, final String email, final String sitoWeb) {
+//		
+//		try {
+//			 open();
+//		        PreparedStatement prepared = getConn()
+//		        		.prepareStatement("INSERT INTO FORNITORE (PIVA, nomeAzienda, indirizzo, città, nazione, telefono, email, sitoWeb) values (?,?,?,?,?,?,?,?)");
+//		        prepared.setString(1,PIVA);
+//		        prepared.setString(2,nomeAzienda);
+//		        prepared.setString(3,indirizzo);
+//		        prepared.setString(4,citta);
+//		        prepared.setString(5,nazione);
+//		        prepared.setString(6,telefono);
+//		        prepared.setString(7,email);
+//		        prepared.setString(8,sitoWeb);
+//		        
+//		        
+//		     	prepared.executeUpdate();
+//		}
+//		catch(Exception e) {
+//
+//			JOptionPane.showMessageDialog(null, "Errore\n" + e);
+//			System.out.println("\nError while add Fornitore " + e);
+//		}
+//		finally {
+//			close();
+//		}
+//	}
+//
+//public void addFornitore(final String PIVA, final String nomeAzienda, final String indirizzo, final String citta, final String nazione, final String email, final String  telefono) {
+//	
+//	try {
+//		 open();
+//	        PreparedStatement prepared = getConn()
+//	        		.prepareStatement("INSERT INTO FORNITORE (PIVA, nomeAzienda, indirizzo, città, nazione, , email, telefono) values (?,?,?,?,?,?,?)");
+//	        prepared.setString(1,PIVA);
+//	        prepared.setString(2,nomeAzienda);
+//	        prepared.setString(3,indirizzo);
+//	        prepared.setString(4,citta);
+//	        prepared.setString(5,nazione);
+//	        prepared.setString(6,email);
+//	        prepared.setString(7,telefono);
+//	        
+//	     	prepared.executeUpdate();
+//	}
+//	catch(Exception e) {
+//
+//		JOptionPane.showMessageDialog(null, "Errore\n" + e);
+//		System.out.println("\nError while add Fornitore " + e);
+//	}
+//	finally {
+//		close();
+//	}
+//}
 }

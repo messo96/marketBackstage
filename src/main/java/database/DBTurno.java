@@ -9,20 +9,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import baseClass.Dipendente;
 import baseClass.Turno;
 
 public class DBTurno extends DBManager{
     private  ResultSet rs;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     
 	public List<Turno> allTurnoFromIdDipendente(final int idDipendente){
 		List<Turno> list = new ArrayList<>();
 		
 		try
 		{
-			String query = "select * from TURNO where idDipendente= " + idDipendente;
+			String query = "select * from TURNO where idDipendente= " + idDipendente + " order by data desc, oraInizio asc";
 			rs = open().executeQuery(query);
 			while(rs.next()) {
 				list.add(new Turno(rs.getDate("data"), rs.getTime("oraInizio"), rs.getTime("oraFine"), rs.getInt("idDipendente")));
@@ -31,6 +33,8 @@ public class DBTurno extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("download Turni from idDipendente " + idDipendente + " failed! "+e);
 		}
 		finally {
@@ -45,7 +49,7 @@ public class DBTurno extends DBManager{
 	
 		try
 		{
-			String query = "select * from TURNO";
+			String query = "select * from TURNO order by data desc, oraInizio asc";
 			rs = open().executeQuery(query);
 			while(rs.next()) {
 				list.add(new Turno(rs.getDate("data"), rs.getTime("oraInizio"), rs.getTime("oraFine"), rs.getInt("idDipendente")));
@@ -54,6 +58,8 @@ public class DBTurno extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("download Turni failed! "+e);
 		}
 		finally {
@@ -72,8 +78,12 @@ public class DBTurno extends DBManager{
 		        prepared.setTime(3, new java.sql.Time(timeFormat.parse(oraFine).getTime()));
 		        prepared.setInt(4, idDip);
 		     	prepared.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Turno inserito correttamente");
+
 		}
 		catch(Exception e) {
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("\nError while insert Turno " + e);
 		}
 		finally {
@@ -96,6 +106,8 @@ public class DBTurno extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("download Turni failed! "+e);
 		}
 		finally {
@@ -118,7 +130,33 @@ public class DBTurno extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("download ricerca Turni failed! "+e);
+		}
+		finally {
+			close();	
+		}
+		return list;
+	}
+	
+	public List<Turno> allTurni(final java.util.Date data){
+		List<Turno> list = new ArrayList<>();
+	
+		try
+		{
+			String query = "select * from TURNO where data= \"" + java.sql.Date.valueOf(sdf.format(data)) + "\" order by oraInizio";
+			rs = open().executeQuery(query);
+			while(rs.next()) {
+				list.add(new Turno(rs.getDate("data"), rs.getTime("oraInizio"), rs.getTime("oraFine"), rs.getInt("idDipendente")));
+			}
+		
+		}
+		catch(Exception e)
+		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
+			System.out.println("download Turni with data "+ data + " failed! "+e);
 		}
 		finally {
 			close();	

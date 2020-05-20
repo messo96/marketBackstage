@@ -2,6 +2,9 @@ package database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import javax.swing.JOptionPane;
+
 import baseClass.Dipendente;
 
 public class DBDipendente extends DBManager{
@@ -9,8 +12,10 @@ public class DBDipendente extends DBManager{
     private  ResultSet rs;
 
 	
-	//cambiare ed ottimizzare query con Relax
 	public Dipendente getDipendenteFromId(final Integer id) {
+		if(!this.existDipendente(id))
+			return null;
+		
 		Dipendente dip = new Dipendente();
 		
 		try
@@ -30,6 +35,8 @@ public class DBDipendente extends DBManager{
 		}
 		catch(Exception e)
 		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("User doesn't exist!"+e);
 		}
 		finally {
@@ -40,21 +47,48 @@ public class DBDipendente extends DBManager{
 
 	}
 
-	public boolean addNuovoDipendente(final String nome, final String cognome, final String codiceFiscale, final String tipo, final String dataDiNascita) {
+	private boolean existDipendente(Integer id) {
+		try
+		{
+			String query = "select * from DIPENDENTE where idDipendente= " + id;
+			rs = open().executeQuery(query);
+			if(rs.next()) {
+				return true;
+				}
+			else
+				return false;
+		}
+		catch(Exception e)
+		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
+			System.out.println("User doesn't exist!"+e);
+		}
+		finally {
+			close();	
+		}
+		return false;
+	}
+
+	public boolean addNuovoDipendente(final String nome, final String cognome, final String codiceFiscale, final String tipo, final String telefono) {
 	    
 	     try {
 			 open();
 		        PreparedStatement prepared = getConn()
-		        		.prepareStatement("insert into DIPENDENTE (nome, cognome, codiceFiscale, tipo, dataDiNascita) values (?,?,?,?,?)");
+		        		.prepareStatement("insert into DIPENDENTE (nome, cognome, codiceFiscale, tipo, telefono) values (?,?,?,?,?)");
 		        prepared.setString(1, nome);
 		     	prepared.setString(2, cognome);
 		     	prepared.setString(3,codiceFiscale);
-		     	prepared.setString(4, dataDiNascita);
+		     	prepared.setString(4, tipo);
+		     	prepared.setString(5, telefono);
 		     	
 		     	prepared.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Dipendente "+nome + " " + cognome + "\n Tipo: " + tipo + " creato correttamente");
 		     	return true;
 		}
 		catch(Exception e) {
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
 			System.out.println("\nError while adding new Employee " + e);
 			return false;
 		}

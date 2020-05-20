@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import baseClass.Dipendente;
 import database.DBDipendente;
 import database.DBManager;
@@ -19,6 +21,7 @@ public class login extends JFrame{
 	private DBDipendente dataDip = new DBDipendente();
 	
 	public login() {
+		FlatLightLaf.install();
 		this.setTitle("LOGIN MARKETBACKSTAGE");
 		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
 		JPanel panel = new JPanel(new FlowLayout());
@@ -32,7 +35,9 @@ public class login extends JFrame{
 		panel.add(codice);
 		panel.add(button);
 		button.addActionListener(e ->{
-			Dipendente dip = dataDip.getDipendenteFromId(Integer.valueOf(codice.getText()));
+			try {
+				Integer.parseInt(codice.getText());
+				Dipendente dip = dataDip.getDipendenteFromId(Integer.valueOf(codice.getText()));
 				if( dip != null) {
 					if(dip.getTipo().equals("Commesso") ) {
 						JOptionPane.showMessageDialog(null, "Benvenuto " + dip.getNome() + "\nTipo : " + dip.getTipo());
@@ -49,6 +54,11 @@ public class login extends JFrame{
 
 					
 					
+			}
+			catch(NumberFormatException n) {
+				JOptionPane.showMessageDialog(null, "Inserire un codice valido");
+			}
+			
 		});
 		
 	}
