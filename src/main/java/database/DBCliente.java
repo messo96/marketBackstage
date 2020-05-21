@@ -98,7 +98,7 @@ public class DBCliente extends DBManager{
 		
 		try
 		{
-			String query = "select * from CLIENTE order by idDipendente";
+			String query = "select * from CLIENTE";
 			rs = open().executeQuery(query);
 			while(rs.next()) {
 				list.add(new Cliente(rs.getString("codiceFiscale"), rs.getString("nome"), rs.getString("cognome"), rs.getInt("totalePunti"), rs.getDate("dataDiNascita")));

@@ -37,4 +37,8 @@ dependencies {
 	
 	compile group: 'com.formdev', name: 'flatlaf', version: '0.35'
 	
+	// https://mvnrepository.com/artifact/com.jtattoo/JTattoo
+	compile group: 'com.jtattoo', name: 'JTattoo', version: '1.6.7'
+	
+	
 }

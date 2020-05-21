@@ -89,7 +89,7 @@ public class gui_prodotto extends JFrame{
 		});
 		
 		JButton btn_fornitore = new JButton("Aggiungi fornitore");
-		btn_fornitore.setBounds(22, 280, 163, 60);
+		btn_fornitore.setBounds(28, 349, 163, 60);
 		btn_fornitore.addActionListener(e ->{
 			new gui_fornitore();
 			fillTableFornitori();
@@ -108,7 +108,7 @@ public class gui_prodotto extends JFrame{
 		panel.add(text_PIVA);
 		panel.add(btn_aggiungi);
 		JScrollPane scrollPane = new JScrollPane(table_fornitore);
-		scrollPane.setBounds(28, 352, 914, 359);
+		scrollPane.setBounds(195, 421, 914, 290);
 		panel.add(scrollPane);
 		panel.add(btn_fornitore);
 		panel.add(box_reparto);

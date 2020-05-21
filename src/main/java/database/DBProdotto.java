@@ -194,4 +194,29 @@ public class DBProdotto extends DBManager{
 			}
 			return list;
 		}
+
+
+		public List<Prodotto> getAllProductsLess(final Integer less) {
+			List<Prodotto> list = new ArrayList<>();
+			
+			try
+			{
+				String query = "select * from PRODOTTO where quantità <= "+less;
+				rs = open().executeQuery(query);
+				while(rs.next()) {
+					list.add(new Prodotto(rs.getInt("idProdotto"), rs.getString("nome"), rs.getString("descrizione"), rs.getDouble("prezzo"), rs.getString("reparto"), rs.getInt("quantità"), rs.getString("PIVA")));
+					}
+				
+			}
+			catch(Exception e)
+			{
+
+				JOptionPane.showMessageDialog(null, "Errore\n" + e);
+				System.out.println("download products error! "+e);
+			}
+			finally {
+				close();	
+			}
+			return list;
+		}
 }

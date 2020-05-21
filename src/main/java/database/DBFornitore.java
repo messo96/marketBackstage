@@ -70,6 +70,31 @@ public class DBFornitore extends DBManager{
 			close();
 		}
 	}
+	
+	public Fornitore getFornitore(final String PIVA) {
+
+		try
+		{
+			String query = "select * from FORNITORE";
+			rs = open().executeQuery(query);
+			if(rs.next()) {
+				return new Fornitore(rs.getString("PIVA"), rs.getString("nomeAzienda"), rs.getString("indirizzo"),rs.getString("città"),
+						rs.getString("nazione"), rs.getString("telefono"), rs.getString("fax"), rs.getString("email")
+									,rs.getString("sitoWeb"));
+				}
+			
+		}
+		catch(Exception e)
+		{
+
+			JOptionPane.showMessageDialog(null, "Errore\n" + e);
+			System.out.println("download fornitore error! "+e);
+		}
+		finally {
+			close();	
+		}
+		return null;
+	}
 //	
 //public void addFornitore(final String PIVA, final String nomeAzienda, final String indirizzo, final String citta, final String nazione, final String  telefono, final String email, final String sitoWeb) {
 //		

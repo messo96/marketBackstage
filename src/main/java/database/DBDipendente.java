@@ -70,20 +70,20 @@ public class DBDipendente extends DBManager{
 		return false;
 	}
 
-	public boolean addNuovoDipendente(final String nome, final String cognome, final String codiceFiscale, final String tipo, final String telefono) {
+	public boolean addNuovoDipendente(final Dipendente dip) {
 	    
 	     try {
 			 open();
 		        PreparedStatement prepared = getConn()
 		        		.prepareStatement("insert into DIPENDENTE (nome, cognome, codiceFiscale, tipo, telefono) values (?,?,?,?,?)");
-		        prepared.setString(1, nome);
-		     	prepared.setString(2, cognome);
-		     	prepared.setString(3,codiceFiscale);
-		     	prepared.setString(4, tipo);
-		     	prepared.setString(5, telefono);
+		        prepared.setString(1, dip.getNome());
+		     	prepared.setString(2, dip.getCognome());
+		     	prepared.setString(3,dip.getCodiceFiscale());
+		     	prepared.setString(4, dip.getTipo());
+		     	prepared.setString(5, dip.getTelefono());
 		     	
 		     	prepared.executeUpdate();
-				JOptionPane.showMessageDialog(null, "Dipendente "+nome + " " + cognome + "\n Tipo: " + tipo + " creato correttamente");
+				JOptionPane.showMessageDialog(null, "Dipendente "+dip.getNome() + " " + dip.getCognome()+ "\n Tipo: " + dip.getTipo()+ " \n\tcreato correttamente");
 		     	return true;
 		}
 		catch(Exception e) {

@@ -42,7 +42,7 @@ public class gui_turno extends JFrame{
 	public gui_turno(Dipendente dipendente) {
 		this.setPreferredSize(new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(), 
 				(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
-		this.setTitle("GESTIONE TURNI " + dipendente.getNome() + " "+ dipendente.getCognome() + "ID: "+ dipendente.getId());
+		this.setTitle("GESTIONE TURNI " + dipendente.getNome() + " "+ dipendente.getCognome() + " ID: "+ dipendente.getId());
 		JPanel panel = new JPanel();
 		this.setContentPane(panel);
 		text = new JTextField();
@@ -52,7 +52,7 @@ public class gui_turno extends JFrame{
 		label_text.setBounds(497, 62, 246, 18);
 		JButton btnSearch = new JButton("Cerca");
 		btnSearch.setBounds(614, 88, 120, 38);
-		JLabel label_nuovo = new JLabel("Inserisci nuovo Turno:\n");
+		JLabel label_nuovo = new JLabel("Inserisci nuovo Turno:");
 		label_nuovo.setBounds(213, 445, 151, 18);
 		JDateChooser date_choose = new JDateChooser();
 		date_choose.setBounds(126, 487, 208, 40);
@@ -76,11 +76,11 @@ public class gui_turno extends JFrame{
 		JButton btnInserisci = new JButton("Inserisci");
 		btnInserisci.setBounds(363, 627, 200, 55);
 		JLabel label_ricerca = new JLabel("Ricerca dipendente da scontrino");
-		label_ricerca.setBounds(908, 445, 246, 18);
+		label_ricerca.setBounds(908, 445, 305, 18);
 		JLabel label_dataEmissione = new JLabel("Data emissione:");
-		label_dataEmissione.setBounds(857, 498, 265, 38);
+		label_dataEmissione.setBounds(772, 498, 265, 38);
 		JDateChooser date_choose_scontrino = new JDateChooser();
-		date_choose_scontrino.setBounds(1045, 498, 265, 38);
+		date_choose_scontrino.setBounds(908, 498, 265, 38);
 		JLabel label_ora = new JLabel("Ora emissione: ");
 		label_ora.setBounds(772, 596, 246, 18);
 		
@@ -93,20 +93,13 @@ public class gui_turno extends JFrame{
 		JButton btn_newDip = new JButton("Nuovo Dipendente");
 		btn_newDip.setBounds(1155, 314, 189, 55);
 		JTextField text_ora = new JTextField();
-		text_ora.setBounds(903, 594, 140, 22);
+		text_ora.setBounds(903, 594, 161, 30);
 		JLabel label_idCassa = new JLabel("Id cassa: ");
-		label_idCassa.setBounds(1098, 598, 246, 18);
+		label_idCassa.setBounds(1098, 598, 208, 18);
 		JTextField text_idCassa = new JTextField();
-		text_idCassa.setBounds(1204, 594, 140, 25);
+		text_idCassa.setBounds(1200, 594, 144, 25);
 		JButton btnCercaDipendente = new JButton("Cerca");
 		btnCercaDipendente.setBounds(1127, 644, 217, 55);
-//		JButton btn_refresh = new JButton();
-//		btn_refresh.setSelectedIcon(new ImageIcon(gui_turno.class.getResource("/gui/icon_refresh.jpg")));
-//		btn_refresh.setIcon(new ImageIcon(gui_turno.class.getResource("/gui/icon_refresh.jpg")));
-//		 btn_refresh.setBounds(696, 0, 33, 30);
-//		btn_refresh.addActionListener(e->{
-//			refreshTableDip();
-//		});
 		
 		btn_newDip.addActionListener(e->{
 			new gui_newDip();
