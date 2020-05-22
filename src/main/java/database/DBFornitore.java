@@ -41,24 +41,24 @@ public class DBFornitore extends DBManager{
 		return list;
 	}
 	
-	public void addFornitore(final String PIVA, final String nomeAzienda, final String indirizzo, final String citta, final String nazione, final String  telefono, final String fax, final String sitoWeb, final String email) {
+	public void addFornitore(Fornitore f) {
 		
 		try {
 			 open();
 		        PreparedStatement prepared = getConn()
 		        		.prepareStatement("INSERT INTO FORNITORE (PIVA, nomeAzienda, indirizzo, città, nazione, telefono, fax, sitoWeb, email) values (?,?,?,?,?,?,?,?,?)");
-		        prepared.setString(1,PIVA);
-		        prepared.setString(2,nomeAzienda);
-		        prepared.setString(3,indirizzo);
-		        prepared.setString(4,citta);
-		        prepared.setString(5,nazione);
-		        prepared.setString(6,telefono);
-		        prepared.setString(7,fax);
-		        prepared.setString(8,sitoWeb);
-		        prepared.setString(9,email);
+		        prepared.setString(1,f.getP_IVA());
+		        prepared.setString(2,f.getNome());
+		        prepared.setString(3,f.getIndirizzo());
+		        prepared.setString(4,f.getCittà());
+		        prepared.setString(5,f.getNazione());
+		        prepared.setString(6,f.getTelefono());
+		        prepared.setString(7,f.getFax());
+		        prepared.setString(8,f.getSitoWeb());
+		        prepared.setString(9,f.getEmail());
 		        
 		     	prepared.executeUpdate();
-				JOptionPane.showMessageDialog(null, "Fornitore "+nomeAzienda+" inserito correttamente");
+				JOptionPane.showMessageDialog(null, "Fornitore "+f.getNome()+" inserito correttamente");
 
 		}
 		catch(Exception e) {

@@ -41,7 +41,7 @@ public class gui_quantity extends JFrame{
 		JButton bt = new JButton("AGGIUNGI");
 		bt.setBounds(642, 84, 101, 44);
 		bt.addActionListener(e ->{
-			new DBProdotto().aggiungiQuantità(Integer.valueOf(text_id.getText()), Integer.valueOf(text_q.getText()));
+			new DBProdotto().aggiornaMagazzino(Integer.valueOf(text_id.getText()), Integer.valueOf(text_q.getText()));
 			Prodotto p = new DBProdotto().getProductFromId(Integer.valueOf(text_id.getText()));
 			JOptionPane.showMessageDialog(null, "Prodotto: "+p.getNome() + "\nQuantità: " + p.getQuantity());
 			model.getDataVector().removeAllElements();

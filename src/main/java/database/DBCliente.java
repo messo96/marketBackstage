@@ -67,19 +67,19 @@ public class DBCliente extends DBManager{
 
 	}
 	
-	public void addCliente(final String codiceFiscale, final String nome, final String cognome, final Date dataDiNascita) {
+	public void addCliente(Cliente c) {
 		try {
 			 open();
 		        PreparedStatement prepared = getConn()
 		        		.prepareStatement("INSERT INTO CLIENTE (codiceFiscale, nome, cognome, totalePunti, dataDiNascita) values (?,?,?,?,?)");
-		        prepared.setString(1, codiceFiscale);
-		        prepared.setString(2, nome);
-		        prepared.setString(3, cognome);
+		        prepared.setString(1, c.getCodiceFiscale());
+		        prepared.setString(2, c.getNome());
+		        prepared.setString(3, c.getCognome());
 		        prepared.setInt(4, 0);
-		        prepared.setDate(5, java.sql.Date.valueOf(sdf.format(dataDiNascita)));
+		        prepared.setDate(5, java.sql.Date.valueOf(sdf.format(c.getDataDiNascita())));
 
 		     	prepared.executeUpdate();
-				JOptionPane.showMessageDialog(null, "Cliente " + nome + " "+cognome + " creato correttamente");
+				JOptionPane.showMessageDialog(null, "Cliente " + c.getNome() + " "+ c.getCognome() + " creato correttamente");
 
 		}
 		catch(Exception e) {

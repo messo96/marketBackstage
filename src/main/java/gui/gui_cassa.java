@@ -124,7 +124,7 @@ public class gui_cassa extends JFrame {
 						
 					label_totale.setText(df.format(totale) + " €");
 					fieldProducts.setText("");
-					dbprodotto.aggiornaMagazzino(idProdotto);	
+					dbprodotto.aggiornaMagazzino(idProdotto,-1);	
 				}
 				
 			}

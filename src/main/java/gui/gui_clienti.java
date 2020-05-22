@@ -82,7 +82,7 @@ public class gui_clienti extends JFrame{
 			if(text_codiceFiscale.getText().length() !=  NUM_CF ||  text_nome.getText().isEmpty() || text_cognome.getText().isEmpty() || date_choose.getDate().equals(null))
 				JOptionPane.showMessageDialog(null, "Compilare tutti i campi correttamente");
 			else {
-				new DBCliente().addCliente(text_codiceFiscale.getText(), text_nome.getText(), text_cognome.getText(), date_choose.getDate());
+				new DBCliente().addCliente(new Cliente(text_codiceFiscale.getText(), text_nome.getText(), text_cognome.getText(), 0, date_choose.getDate()));
 				refreshTable();	
 			}
 			

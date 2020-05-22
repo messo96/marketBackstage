@@ -163,4 +163,45 @@ public class DBTurno extends DBManager{
 		}
 		return list;
 	}
+	
+	public boolean modificaTurno(final Turno t, final Turno t_mod) {
+		
+			try
+			{	
+				java.sql.Time oraInizio = new java.sql.Time(t.getOraInizio().getTime());
+				java.sql.Time oraFine = new java.sql.Time(t.getOraFine().getTime());
+				java.sql.Time oraInizio_mod = new java.sql.Time(t_mod.getOraInizio().getTime());
+				java.sql.Time oraFine_mod = new java.sql.Time(t_mod.getOraFine().getTime());
+				
+				  open();
+				  PreparedStatement prepared = getConn()
+			        		.prepareStatement("update TURNO set data = ?, oraInizio = ?, oraFine= ?, idDipendente= ?"+
+			        						" where data= ? AND oraInizio= ? AND oraFine= ? AND idDipendente= ?");
+			        prepared.setDate(1,  java.sql.Date.valueOf(sdf.format(t_mod.getData())));
+			        prepared.setTime(2, oraInizio_mod);
+			        prepared.setTime(3, oraFine_mod);
+			        prepared.setInt(4, t_mod.getIdDipendente());
+			        prepared.setDate(5,  java.sql.Date.valueOf(sdf.format(t.getData())));
+			        prepared.setTime(6, oraInizio);
+			        prepared.setTime(7, oraFine);
+			        prepared.setInt(8, t.getIdDipendente());
+			        
+			     	prepared.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Turno modificato correttamente");
+
+			
+			}
+			catch(Exception e)
+			{
+
+				JOptionPane.showMessageDialog(null, "Errore\n" + e);
+				System.out.println("download edit Turno failed! "+e);
+			}
+			finally {
+				close();	
+			}
+			return false;
+		}
+
+
 }

@@ -72,13 +72,14 @@ public class DBProdotto extends DBManager{
 		return Optional.empty();
 	}
 
-	public void aggiornaMagazzino(final Integer idProdotto) {
+	public void aggiornaMagazzino(final Integer idProdotto, final Integer q) {
 		try
 		{
 			 open();
 	        PreparedStatement prepared = getConn()
-	        		.prepareStatement("update PRODOTTO set quantità = quantità - 1 where idProdotto = ?");
-	        prepared.setInt(1, idProdotto);
+	        		.prepareStatement("update PRODOTTO set quantità = quantità + ? where idProdotto = ?");
+	        prepared.setInt(1, q);
+	        prepared.setInt(2, idProdotto);
 	     	
 	     	prepared.executeUpdate();		
 		}
@@ -148,29 +149,6 @@ public class DBProdotto extends DBManager{
 		}
 	}
 	
-		public void aggiungiQuantità(final Integer idProdotto, final Integer quantity) {
-			try
-			{
-				 open();
-		        PreparedStatement prepared = getConn()
-		        		.prepareStatement("update PRODOTTO set quantità = quantità + ? where idProdotto = ?");
-		       
-		        prepared.setInt(1, quantity);
-		        prepared.setInt(2, idProdotto);
-		     	
-		     	prepared.executeUpdate();		
-			}
-			catch(Exception e)
-			{
-
-				JOptionPane.showMessageDialog(null, "Errore\n" + e);
-				System.out.println("Product add quantity error! "+e);
-			}
-			finally {
-				close();	
-			}
-		}
-		
 		
 		public List<String> getAllReparti(){
 			List<String> list = new ArrayList<>();

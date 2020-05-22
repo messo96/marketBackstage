@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import baseClass.Fornitore;
 import database.DBFornitore;
 
 public class gui_fornitore extends JFrame{
@@ -86,8 +87,8 @@ public class gui_fornitore extends JFrame{
 								text_citta.getText().isEmpty() || text_nazione.getText().isEmpty() || text_telefono.getText().isEmpty())
 					JOptionPane.showMessageDialog(null, "Compilare i campi obbligatori");
 			else 
-			new DBFornitore().addFornitore(text_PIVA.getText(), text_nome.getText(), text_indirizzo.getText(), text_citta.getText(),
-						text_nazione.getText(), text_telefono.getText(), text_fax.getText(), text_sito.getText(), text_email.getText());
+			new DBFornitore().addFornitore(new Fornitore(text_PIVA.getText(), text_nome.getText(), text_indirizzo.getText(), text_citta.getText(),
+						text_nazione.getText(), text_telefono.getText(), text_fax.getText(), text_sito.getText(), text_email.getText()));
 						
 		});
 		panel.setLayout(null);

@@ -2,6 +2,13 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -17,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
@@ -136,12 +145,44 @@ public class gui_turno extends JFrame{
 			refreshTable(date_search.getDate());
 		});
 		
-		table = new JTable();
+		table = new JTable() {
+			public boolean editCellAt(int row, int column, java.util.EventObject e) {
+				return false;
+			}
+		};
 		table.setModel(model);
 		table.setFocusable(true);
-		table.setEditingColumn(1);
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent mouseEvent) {
+				if(mouseEvent.getClickCount() == 2) {
+					
+					Integer id = Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString());
+					System.out.println(id);
+					java.util.Date d;
+					Time tInizio; 
+					Time tFine ;
+					try {
+						d = sdf_normal.parse(table.getValueAt(table.getSelectedRow(), 1).toString());
+						tInizio = new Time(timeFormat.parse(table.getValueAt(table.getSelectedRow(), 2).toString()).getTime());
+						tFine = new Time(timeFormat.parse(table.getValueAt(table.getSelectedRow(), 3).toString()).getTime());
+						
+						new gui_EditTurno(new Turno(d, tInizio, tFine, id));
+						
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
 		panel.setLayout(null);
-		table_dip = new JTable();
+		table_dip = new JTable(){
+			public boolean editCellAt(int row, int column, java.util.EventObject e) {
+				return false;
+			}
+		};
 		table_dip.setModel(model_dip);		
 		table_dip.setFocusable(false);
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -224,8 +265,6 @@ public class gui_turno extends JFrame{
 			while(ite.hasNext()) {
 				Dipendente d = ite.next();
 				model_dip.addRow(new Object [] {d.getId(), d.getNome(), d.getCognome(), d.getTipo(), d.getTelefono()});		
-				System.out.println(d.getNome());
-
 			}
 				
 		}
