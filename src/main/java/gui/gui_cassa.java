@@ -144,10 +144,10 @@ public class gui_cassa extends JFrame {
 			totale=0.0;
 			label_totale.setText(df.format(totale) + "€");
 			cliente=null;
+			label_cliente2.setText("");
 			model.getDataVector().removeAllElements();
 			revalidate();
 			repaint();
-			label_cliente2.setText("");
 			
 		});
 		JButton btnFineTurno = new JButton("Fine Turno");

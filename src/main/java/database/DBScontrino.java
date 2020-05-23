@@ -18,6 +18,8 @@ public class DBScontrino extends DBManager{
     private  ResultSet rs;
     private java.util.Date d;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat sdf_normal = new SimpleDateFormat("dd-MM-yyyy");
+
 	private Time time;
 	private DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	private static DecimalFormat df = new DecimalFormat("#.##");
@@ -75,11 +77,12 @@ public class DBScontrino extends DBManager{
 		        prepared.setInt(1, idCassa);
 		        d = new java.util.Date();
 		        prepared.setDate(2, java.sql.Date.valueOf(sdf.format(d)));
-		        time = new Time(d.getTime());
+		        time = new Time(timeFormat.parse(timeFormat.format(d)).getTime());
 		        prepared.setTime(3, time);
 		        prepared.setDouble(4, totale);
 		     	prepared.executeUpdate();
-				JOptionPane.showMessageDialog(null, "Scontrino stampato correttamente\n Totale: " + totale + " €");
+				JOptionPane.showMessageDialog(null, "Scontrino stampato correttamente"
+						+ "\nData Emissione: "+sdf_normal.format(d)+ "\nOra Emissione: " +time.getHours()+":"+time.getMinutes() + "\nNumero Cassa: "+idCassa+"\nTotale: " + df.format(totale) + " €");
 		}
 		catch(Exception e) {
 

@@ -37,7 +37,7 @@ public class gui_EditTurno extends JFrame {
 		JTextField text_tf = new JTextField(oraFine);
 		text_tf.setBounds(680, 21, 83, 25);
 		JDateChooser date_choose = new JDateChooser(t.getData());
-		date_choose.setBounds(294, 21, 127, 21);
+		date_choose.setBounds(280, 21, 154, 27);
 		panel.setLayout(null);
 		JButton btn = new JButton("Modifica");
 		btn.setBounds(636, 78, 127, 34);

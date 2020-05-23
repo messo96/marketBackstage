@@ -217,7 +217,6 @@ public class gui_turno extends JFrame{
 		panel.add(date_search);
 		panel.add(btn_searchData);
 		panel.add(btn_newDip);
-//		panel.add(btn_refresh);
 		
 		this.pack();
 		this.setVisible(true);
