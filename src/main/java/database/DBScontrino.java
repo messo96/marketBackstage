@@ -6,13 +6,11 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
 import baseClass.Dipendente;
-import baseClass.Prodotto;
 
 public class DBScontrino extends DBManager{
     private  ResultSet rs;
@@ -67,6 +65,7 @@ public class DBScontrino extends DBManager{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void stampaScontrino(final Integer idCassa, final Double totale) {
 		
 		
@@ -97,8 +96,10 @@ public class DBScontrino extends DBManager{
 	public Dipendente ricercaDipDaScontrino(final Date data, final String oraEmissione, final Integer idCassa) {
 		try
 		{
-			String query = "select D.* from SCONTRINO S, LAVORA L, DIPENDENTE D where L.idCassa = "
-					+ idCassa + " AND \"" + java.sql.Date.valueOf(sdf.format(data)) +"\" = L.data AND \"" +new java.sql.Time(timeFormat.parse(oraEmissione).getTime()) + "\" BETWEEN L.oraInizio AND L.oraFine " + 
+			Date date = java.sql.Date.valueOf(sdf.format(data)) ;
+			Time time = new java.sql.Time(timeFormat.parse(oraEmissione).getTime());
+			String query = "select D.* from LAVORA L, DIPENDENTE D where L.idCassa = "
+					+ idCassa + " AND \"" + date +"\" = L.data AND \"" + time + "\" BETWEEN L.oraInizio AND L.oraFine " + 
 					" AND L.idDipendente = D.idDipendente";
 			rs = open().executeQuery(query);
 			if(rs.next()) {

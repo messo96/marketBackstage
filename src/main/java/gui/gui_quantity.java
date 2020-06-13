@@ -18,6 +18,10 @@ import database.DBProdotto;
 
 public class gui_quantity extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DefaultTableModel model;
 	private JTable table;
 	

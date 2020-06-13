@@ -7,6 +7,8 @@ import javax.swing.*;
 import baseClass.Dipendente;
 import database.DBDipendente;
 
+
+
 public class gui_newDip extends JFrame{
 	/**
 	 * 
@@ -50,10 +52,12 @@ public class gui_newDip extends JFrame{
 		btn.addActionListener(e->{
 			if(text_nome.getText().isEmpty() || text_cognome.getText().isEmpty() || text_cf.getText().length() != NUM_CF || text_telefono.getText().isEmpty())
 				JOptionPane.showMessageDialog(null, "Compilare tutti i campi obbligatori");
-			else
-				new DBDipendente().addNuovoDipendente(new Dipendente(null,text_nome.getText(), text_cognome.getText(),String.valueOf(box.getSelectedItem())
-																	, text_cf.getText(), text_telefono.getText()));
-			this.dispose();
+			else {
+				new DBDipendente().addNuovoDipendente(new Dipendente(0,text_nome.getText(), text_cognome.getText(),String.valueOf(box.getSelectedItem())
+						, text_cf.getText(), text_telefono.getText()));
+				this.dispose();
+			}
+				
 		});
 		panel.setLayout(null);
 		

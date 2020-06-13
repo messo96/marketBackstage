@@ -1,6 +1,5 @@
 package gui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -15,15 +14,17 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import baseClass.Fornitore;
-import baseClass.Prodotto;
 import database.DBFornitore;
 import database.DBProdotto;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 public class gui_prodotto extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable table_fornitore;
 	private DefaultTableModel model_fornitore;
 	private DBFornitore dbfornitore = new DBFornitore();

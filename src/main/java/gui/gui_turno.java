@@ -2,20 +2,17 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Time;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,11 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import javax.swing.table.DefaultTableModel;
 
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import baseClass.Dipendente;
@@ -37,6 +32,10 @@ import database.DBScontrino;
 import database.DBTurno;
 
 public class gui_turno extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DBTurno dbturno = new DBTurno();
 	private DefaultTableModel model;
 	private DefaultTableModel model_dip;
@@ -146,12 +145,18 @@ public class gui_turno extends JFrame{
 		});
 		
 		table = new JTable() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean editCellAt(int row, int column, java.util.EventObject e) {
 				return false;
 			}
 		};
 		table.setModel(model);
 		table.setFocusable(true);
+		
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent mouseEvent) {
@@ -179,6 +184,11 @@ public class gui_turno extends JFrame{
 		
 		panel.setLayout(null);
 		table_dip = new JTable(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean editCellAt(int row, int column, java.util.EventObject e) {
 				return false;
 			}

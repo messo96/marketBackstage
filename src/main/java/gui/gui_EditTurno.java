@@ -18,7 +18,11 @@ import baseClass.Turno;
 import database.DBTurno;
 
 public class gui_EditTurno extends JFrame {
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
 	

@@ -2,14 +2,12 @@ package database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import baseClass.Fornitore;
-import baseClass.Prodotto;
 
 public class DBFornitore extends DBManager{
     private  ResultSet rs;

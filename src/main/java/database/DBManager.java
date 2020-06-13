@@ -2,7 +2,6 @@ package database;
 
 import java.sql.*;
 
-import javax.swing.JOptionPane;
 
 public class DBManager {
 
